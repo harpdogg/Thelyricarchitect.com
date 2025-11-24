@@ -3,134 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Lyric Architect - Official Songs</title>
+    <title>Welcome | The Lyric Architect</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { font-family: 'Helvetica Neue', Arial, sans-serif; margin: 0; background-color: #121212; color: #f0f0f0; }
-        .site-header { 
-            text-align: center; 
-            padding: 40px 20px; 
-            background: linear-gradient(180deg, #2a2a2a 0%, #121212 100%);
-            border-bottom: 2px solid #ff5500;
+        /* Custom styles for a clean, dark musical theme (consistent with catalogue.html) */
+        body {
+            font-family: 'Inter', sans-serif;
         }
-        .watermark-container {
-            font-size: 2.5em;
-            font-weight: 700;
-            color: #ffffff;
-            letter-spacing: -0.05em;
-            overflow: hidden; /* Important for hiding the "incoming" letters */
+        .container-bg {
+            background-color: #1a1a2e; /* Deep blue/purple */
         }
-        .watermark-char {
-            display: inline-block;
-            opacity: 0; /* Starts invisible */
-            transform: translate(0, 50px); /* Starts below the final position */
-            animation: stringIn 2.0s forwards; /* The main animation */
+        .text-accent {
+            color: #ff6a3d; /* Bright orange/red for contrast */
         }
-
-        /* Define the String-In Animation */
-        @keyframes stringIn {
-            0% { 
-                opacity: 0; 
-                transform: translate(0, -100px) rotate(15deg); /* Start floating from above and rotated */
-            }
-            50% { 
-                opacity: 1; 
-                transform: translate(0, 0) rotate(0deg); /* Snap to final position */
-            }
-            100% {
-                opacity: 1;
-                transform: translate(0, 0) rotate(0deg);
-            }
+        .hero-bg {
+            /* Placeholder background image */
+            background-image: url('https://placehold.co/1200x600/1a1a2e/ffffff/png?text=THE+LYRIC+ARCHITECT'); 
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            isolation: isolate;
         }
-
-        /* Add a delay to each character to create the "stringing" effect */
-        /* This simulates the letters coming in one after another */
-        .watermark-char:nth-child(1) { animation-delay: 0.1s; }
-        .watermark-char:nth-child(2) { animation-delay: 0.15s; }
-        .watermark-char:nth-child(3) { animation-delay: 0.2s; }
-        /* .c */
-        .watermark-char:nth-child(4) { animation-delay: 0.25s; }
-        .watermark-char:nth-child(5) { animation-delay: 0.3s; }
-        /* .o */
-        .watermark-char:nth-child(6) { animation-delay: 0.35s; }
-        /* ...and so on for all 23 characters including the periods */
-
-        .song-list-wrapper { max-width: 900px; margin: 20px auto; padding: 0 20px; }
-        h1 { text-align: center; color: #ff5500; margin-bottom: 30px; }
-        .song-item { padding: 15px 0; border-bottom: 1px solid #333; display: flex; justify-content: space-between; align-items: center; }
-        .song-item:last-child { border-bottom: none; }
-        .song-title { font-weight: bold; color: #f0f0f0; }
-        .song-genre { font-size: 0.8em; color: #999; margin-top: 4px; }
-        .song-link a { text-decoration: none; color: #ff5500; font-weight: 600; padding: 6px 12px; border: 2px solid #ff5500; border-radius: 4px; transition: background-color 0.3s, color 0.3s; }
-        .song-link a:hover { background-color: #ff5500; color: #121212; }
+        .hero-bg::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6); /* Dark overlay */
+            z-index: -1;
+        }
+        .card {
+            background-color: #2c2c54; /* Lighter background for content */
+        }
     </style>
 </head>
-<body>
+<body class="container-bg min-h-screen text-gray-100 flex flex-col">
 
-    <div class="site-header">
-        <div class="watermark-container" id="watermark-text">
+    <!-- Navigation Bar -->
+    <nav class="bg-slate-900 shadow-xl sticky top-0 z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <a href="./index.html" class="flex-shrink-0 text-2xl font-bold text-accent tracking-widest">
+                        THE LYRIC ARCHITECT
+                    </a>
+                </div>
+                <div class="flex space-x-4">
+                    <a href="./index.html" class="px-3 py-2 rounded-md text-sm font-medium bg-accent text-white transition duration-150">Home</a>
+                    <a href="./about.html" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white transition duration-150">About</a>
+                    <a href="./catalogue.html" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white transition duration-150">Song Catalogue</a>
+                </div>
             </div>
-    </div>
-
-    <div class="song-list-wrapper">
-        <h1>Official Song Index</h1>
-        <div id="songs-container">
-            <p style="text-align:center;">Loading songs...</p>
         </div>
-    </div>
+    </nav>
 
-    <script>
-        // 1. Watermark Animation Logic
-        const domainName = "thelyricarchitect.com";
-        const watermarkElement = document.getElementById('watermark-text');
-        
-        domainName.split('').forEach((char, index) => {
-            const charSpan = document.createElement('span');
-            charSpan.classList.add('watermark-char');
-            // Add custom delay for smoother effect (this replaces the static CSS delays)
-            charSpan.style.animationDelay = `${0.05 * index + 0.1}s`; 
-            
-            // Handle spaces/periods in the text
-            charSpan.textContent = char === ' ' ? '\u00A0' : char; // Non-breaking space for layout
-            watermarkElement.appendChild(charSpan);
-        });
+    <!-- Hero Section -->
+    <header class="hero-bg py-20 md:py-32 flex items-center justify-center flex-grow">
+        <div class="text-center px-4 max-w-4xl">
+            <h1 class="text-6xl md:text-8xl font-black text-white leading-tight mb-4 tracking-tight">
+                THE LYRIC ARCHITECT
+            </h1>
+            <p class="text-3xl md:text-4xl text-accent font-semibold mb-8">
+                40 Years of Prolific Writing, Ready for Collaboration.
+            </p>
+            <a href="./catalogue.html" class="inline-block bg-accent hover:bg-orange-600 text-slate-900 font-bold py-4 px-10 rounded-full text-xl shadow-2xl transition duration-300 transform hover:scale-105">
+                Explore The Complete Song Catalogue
+            </a>
+        </div>
+    </header>
 
-        // 2. Song List Display Logic
-        const DATA_FILE = 'songs.json';
+    <!-- Feature Section (Quick Info) -->
+    <section class="py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+            <!-- Card 1: Genres -->
+            <div class="card p-6 rounded-xl shadow-lg border-t-4 border-accent/70">
+                <div class="text-4xl mb-4 text-accent">🎵</div>
+                <h3 class="text-xl font-bold mb-2">Diverse Genres</h3>
+                <p class="text-gray-400">From Blues and Rock to Hip Hop and Gospel, our catalogue covers a wide musical spectrum.</p>
+            </div>
+            <!-- Card 2: Experience -->
+            <div class="card p-6 rounded-xl shadow-lg border-t-4 border-accent/70">
+                <div class="text-4xl mb-4 text-accent">✍️</div>
+                <h3 class="text-xl font-bold mb-2">Four Decades of Lyrics</h3>
+                <p class="text-gray-400">Over 40 years spent perfecting the art of lyricism and songwriting.</p>
+            </div>
+            <!-- Card 3: Licensing -->
+            <div class="card p-6 rounded-xl shadow-lg border-t-4 border-accent/70">
+                <div class="text-4xl mb-4 text-accent">💼</div>
+                <h3 class="text-xl font-bold mb-2">Ready to Collaborate</h3>
+                <p class="text-gray-400">Seeking artists, producers, and licensing opportunities for every track.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="bg-slate-900 mt-8 py-4 text-center text-gray-400 text-sm">
+        <p>&copy; 2024 The Lyric Architect. All Rights Reserved. | Rickie Lee Reeves</p>
+    </footer>
 
-        fetch(DATA_FILE)
-            .then(response => {
-                if (!response.ok) throw new Error('Could not load songs.json');
-                return response.json();
-            })
-            .then(songs => {
-                const container = document.getElementById('songs-container');
-                container.innerHTML = '';
-                if (songs.length === 0) {
-                    container.innerHTML = '<p>No songs found.</p>';
-                    return;
-                }
-                songs.forEach(song => {
-                    const songItem = document.createElement('div');
-                    songItem.classList.add('song-item');
-                    
-                    const textDiv = document.createElement('div');
-                    textDiv.innerHTML = `
-                        <div class="song-title">${song.title}</div>
-                        <div class="song-genre">Genre: ${song.genre || 'N/A'}</div>
-                    `;
-                    songItem.appendChild(textDiv);
-
-                    const linkDiv = document.createElement('div');
-                    linkDiv.classList.add('song-link');
-                    linkDiv.innerHTML = `<a href="${song.soundcloud_link}" target="_blank" rel="noopener noreferrer">Listen on SoundCloud</a>`;
-                    songItem.appendChild(linkDiv);
-                    container.appendChild(songItem);
-                });
-            })
-            .catch(error => {
-                console.error('Error fetching song data:', error);
-                document.getElementById('songs-container').innerHTML = '<p style="color:red; text-align:center;">An error occurred while loading the song list. Check the `songs.json` file.</p>';
-            });
-    </script>
 </body>
 </html>
