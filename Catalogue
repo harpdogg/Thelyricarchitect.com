@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Song Catalogue | The Lyric Architect</title>
     <!-- Load Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>
     <style>
         /* Custom styles for a clean, dark musical theme */
         body {
@@ -45,7 +45,6 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <div class="flex items-center">
-                    <!-- Website Name: The Lyric Architect -->
                     <a href="./index.html" class="flex-shrink-0 text-2xl font-bold text-accent tracking-widest">
                         THE LYRIC ARCHITECT
                     </a>
@@ -53,7 +52,6 @@
                 <div class="flex space-x-4">
                     <a href="./index.html" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white transition duration-150">Home</a>
                     <a href="./about.html" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white transition duration-150">About</a>
-                    <!-- Active Link -->
                     <a href="./catalogue.html" class="px-3 py-2 rounded-md text-sm font-medium bg-accent text-white transition duration-150">Song Catalogue</a>
                 </div>
             </div>
@@ -100,50 +98,49 @@
 
     <script>
         // Full list of songs and their corresponding metadata
-        // Note: The 'soundcloud_link' is used for the listen button. If empty or not an 'http' link, it shows "Link Unavailable (Updating)".
         const songs = [
-            { "title": "sports sports sports sports", "genre": "rap", "soundcloud_link": "https://soundcloud.com/user-344154267/sports-sports-sports-sports" },
-            { "title": "oopsie doopsie rap version", "genre": "rap", "soundcloud_link": "https://soundcloud.com/user-344154267/oopsie-doopsie-rap-version?in=user-344154267/sets/rap-hip-gospel" },
-            { "title": "sports sports sports sports 1", "genre": "hiphop", "soundcloud_link": "https://soundcloud.com/user-344154267/sports-sports-sports-sports-1" },
-            { "title": "had to be bad before you were", "genre": "hiphop", "soundcloud_link": "https://soundcloud.com/user-344154267/had-to-be-bad-before-you-were" },
+            { "title": "sports sports sports sports", "genre": "rap", "soundcloud_link": "[https://soundcloud.com/user-344154267/sports-sports-sports-sports](https://soundcloud.com/user-344154267/sports-sports-sports-sports)" },
+            { "title": "oopsie doopsie rap version", "genre": "rap", "soundcloud_link": "[https://soundcloud.com/user-344154267/oopsie-doopsie-rap-version?in=user-344154267/sets/rap-hip-gospel](https://soundcloud.com/user-344154267/oopsie-doopsie-rap-version?in=user-344154267/sets/rap-hip-gospel)" },
+            { "title": "sports sports sports sports 1", "genre": "hiphop", "soundcloud_link": "[https://soundcloud.com/user-344154267/sports-sports-sports-sports-1](https://soundcloud.com/user-344154267/sports-sports-sports-sports-1)" },
+            { "title": "had to be bad before you were", "genre": "hiphop", "soundcloud_link": "[https://soundcloud.com/user-344154267/had-to-be-bad-before-you-were](https://soundcloud.com/user-344154267/had-to-be-bad-before-you-were)" },
             { "title": "stone cold eyes a rocker", "genre": "blues", "soundcloud_link": "" }, 
             { "title": "my lyrics in the air", "genre": "other", "soundcloud_link": "" }, 
             { "title": "a bottom", "genre": "country", "soundcloud_link": "" }, 
-            { "title": "dont think me crazy 1", "genre": "country", "soundcloud_link": "https://soundcloud.com/user-344154267/dont-think-me-crazy-1?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=d325f9a160234be2af44da63cb209858" },
+            { "title": "dont think me crazy 1", "genre": "country", "soundcloud_link": "[https://soundcloud.com/user-344154267/dont-think-me-crazy-1?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=d325f9a160234be2af44da63cb209858](https://soundcloud.com/user-344154267/dont-think-me-crazy-1?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=d325f9a160234be2af44da63cb209858)" },
             { "title": "harmonica blues stomp 7", "genre": "country", "soundcloud_link": "" }, 
-            { "title": "cant love no woman", "genre": "country", "soundcloud_link": "https://soundcloud.com/user-344154267/cant-love-no-woman?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=f9d6c2ab496042c6b76868b2370bbbd5" },
-            { "title": "you were too good for me", "genre": "pop rock", "soundcloud_link": "https://soundcloud.com/user-344154267/you-were-too-good-for-me" },
+            { "title": "cant love no woman", "genre": "country", "soundcloud_link": "[https://soundcloud.com/user-344154267/cant-love-no-woman?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=f9d6c2ab496042c6b76868b2370bbbd5](https://soundcloud.com/user-344154267/cant-love-no-woman?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=f9d6c2ab496042c6b76868b2370bbbd5)" },
+            { "title": "you were too good for me", "genre": "pop rock", "soundcloud_link": "[https://soundcloud.com/user-344154267/you-were-too-good-for-me](https://soundcloud.com/user-344154267/you-were-too-good-for-me)" },
             { "title": "The Last Juke on the 99", "genre": "blues", "soundcloud_link": "" }, 
-            { "title": "Keep Getting Worse", "genre": "blues", "soundcloud_link": "https://soundcloud.com/user-344154267/keep-getting-worse?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=632c19d5ce164921b351c560d927124f" },
-            { "title": "Dehydrated All Dried Up", "genre": "blues", "soundcloud_link": "https://soundcloud.com/user-344154267/dehydrated-all-dried-up?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=92448ad4c9dc43c9a6beaf24a820d0b6" },
-            { "title": "Said Freedom", "genre": "rock", "soundcloud_link": "https://soundcloud.com/user-344154267/said-freedom-1?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=189bae2f8cc14931a1eb25bd1cc3fadd" },
+            { "title": "Keep Getting Worse", "genre": "blues", "soundcloud_link": "[https://soundcloud.com/user-344154267/keep-getting-worse?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=632c19d5ce164921b351c560d927124f](https://soundcloud.com/user-344154267/keep-getting-worse?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=632c19d5ce164921b351c560d927124f)" },
+            { "title": "Dehydrated All Dried Up", "genre": "blues", "soundcloud_link": "[https://soundcloud.com/user-344154267/dehydrated-all-dried-up?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=92448ad4c9dc43c9a6beaf24a820d0b6](https://soundcloud.com/user-344154267/dehydrated-all-dried-up?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=92448ad4c9dc43c9a6beaf24a820d0b6)" },
+            { "title": "Said Freedom", "genre": "rock", "soundcloud_link": "[https://soundcloud.com/user-344154267/said-freedom-1?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=189bae2f8cc14931a1eb25bd1cc3fadd](https://soundcloud.com/user-344154267/said-freedom-1?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=189bae2f8cc14931a1eb25bd1cc3fadd)" },
             { "title": "Liar Liar Dicks On Fire", "genre": "rock", "soundcloud_link": "" }, 
-            { "title": "Hotel Blues", "genre": "blues", "soundcloud_link": "https://soundcloud.com/user-344154267/hotel-blues-1?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=425c56fdf32447359ae2e7232ff3648c" },
-            { "title": "High Up On That Mountain", "genre": "gospel", "soundcloud_link": "https://soundcloud.com/user-344154267/high-up-on-that-mountain?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=811068000ff04648a735cd197499cba0" },
+            { "title": "Hotel Blues", "genre": "blues", "soundcloud_link": "[https://soundcloud.com/user-344154267/hotel-blues-1?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=425c56fdf32447359ae2e7232ff3648c](https://soundcloud.com/user-344154267/hotel-blues-1?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=425c56fdf32447359ae2e7232ff3648c)" },
+            { "title": "High Up On That Mountain", "genre": "gospel", "soundcloud_link": "[https://soundcloud.com/user-344154267/high-up-on-that-mountain?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=811068000ff04648a735cd197499cba0](https://soundcloud.com/user-344154267/high-up-on-that-mountain?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=811068000ff04648a735cd197499cba0)" },
             { "title": "Why Worry About It", "genre": "rock", "soundcloud_link": "" }, 
-            { "title": "New World Order No Kings", "genre": "rock", "soundcloud_link": "https://soundcloud.com/user-344154267/new-world-order-no-kings?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=7cf25e55de444e61a8f81c6d3af25485" },
-            { "title": "Too High Gotta Go Down", "genre": "rock", "soundcloud_link": "https://soundcloud.com/user-344154267/too-high-gotta-go-down?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=493c8a0e1aae462d92e6868b2c81be08" },
+            { "title": "New World Order No Kings", "genre": "rock", "soundcloud_link": "[https://soundcloud.com/user-344154267/new-world-order-no-kings?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=7cf25e55de444e61a8f81c6d3af25485](https://soundcloud.com/user-344154267/new-world-order-no-kings?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=7cf25e55de444e61a8f81c6d3af25485)" },
+            { "title": "Too High Gotta Go Down", "genre": "rock", "soundcloud_link": "[https://soundcloud.com/user-344154267/too-high-gotta-go-down?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=493c8a0e1aae462d92e6868b2c81be08](https://soundcloud.com/user-344154267/too-high-gotta-go-down?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=493c8a0e1aae462d92e6868b2c81be08)" },
             { "title": "2 Outa 3 Ain't Bad", "genre": "rock", "soundcloud_link": "" }, 
-            { "title": "Show Me Don't Tell Me", "genre": "rock", "soundcloud_link": "https://soundcloud.com/user-344154267/show-me-dont-tell-me?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=1d56fe60a143437aa2e3421b82c5e464" },
+            { "title": "Show Me Don't Tell Me", "genre": "rock", "soundcloud_link": "[https://soundcloud.com/user-344154267/show-me-dont-tell-me?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=1d56fe60a143437aa2e3421b82c5e464](https://soundcloud.com/user-344154267/show-me-dont-tell-me?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=1d56fe60a143437aa2e3421b82c5e464)" },
             { "title": "Hungry", "genre": "rock", "soundcloud_link": "" }, 
             { "title": "Happiness Remix 1", "genre": "rock", "soundcloud_link": "" }, 
-            { "title": "Happiness Remix 2", "genre": "rock", "soundcloud_link": "https://soundcloud.com/user-344154267/happiness-remix-2?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=409c9d6975894efd85aa4fbd3e502f52" },
+            { "title": "Happiness Remix 2", "genre": "rock", "soundcloud_link": "[https://soundcloud.com/user-344154267/happiness-remix-2?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=409c9d6975894efd85aa4fbd3e502f52](https://soundcloud.com/user-344154267/happiness-remix-2?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=409c9d6975894efd85aa4fbd3e502f52)" },
             { "title": "Red Beans and Rice", "genre": "rock", "soundcloud_link": "" }, 
             { "title": "Devil Tried to Take My Soul 1", "genre": "gospel", "soundcloud_link": "" }, 
-            { "title": "Devil Tried to Take My Soul 2", "genre": "gospel", "soundcloud_link": "https://soundcloud.com/user-344154267/devil-tried-to-take-my-soul-2?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=ae8cda6b8f414e4fb9e39a806e45134f" },
+            { "title": "Devil Tried to Take My Soul 2", "genre": "gospel", "soundcloud_link": "[https://soundcloud.com/user-344154267/devil-tried-to-take-my-soul-2?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=ae8cda6b8f414e4fb9e39a806e45134f](https://soundcloud.com/user-344154267/devil-tried-to-take-my-soul-2?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=ae8cda6b8f414e4fb9e39a806e45134f)" },
             { "title": "Devil Tried Harp", "genre": "gospel", "soundcloud_link": "" }, 
-            { "title": "1 of the 10 G Harp", "genre": "gospel", "soundcloud_link": "https://soundcloud.com/user-344154267/1-of-the-10-g-harp?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=ab3442e96bb14eb4a4906fa4805a942f" },
-            { "title": "Another Dollar", "genre": "blues", "soundcloud_link": "https://soundcloud.com/user-344154267/another-dollar-2?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=97cf922f3c6c4b61959a8dd269df3019" },
+            { "title": "1 of the 10 G Harp", "genre": "gospel", "soundcloud_link": "[https://soundcloud.com/user-344154267/1-of-the-10-g-harp?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=ab3442e96bb14eb4a4906fa4805a942f](https://soundcloud.com/user-344154267/1-of-the-10-g-harp?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=ab3442e96bb14eb4a4906fa4805a942f)" },
+            { "title": "Another Dollar", "genre": "blues", "soundcloud_link": "[https://soundcloud.com/user-344154267/another-dollar-2?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=97cf922f3c6c4b61959a8dd269df3019](https://soundcloud.com/user-344154267/another-dollar-2?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=97cf922f3c6c4b61959a8dd269df3019)" },
             { "title": "Cross Harp", "genre": "blues", "soundcloud_link": "" }, 
             { "title": "Evil Man", "genre": "blues", "soundcloud_link": "" }, 
-            { "title": "Driving Me Crazy", "genre": "blues", "soundcloud_link": "https://soundcloud.com/user-344154267/driving-me-crazy?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=a6d3400f69954c46b561eb800d81b431" },
+            { "title": "Driving Me Crazy", "genre": "blues", "soundcloud_link": "[https://soundcloud.com/user-344154267/driving-me-crazy?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=a6d3400f69954c46b561eb800d81b431](https://soundcloud.com/user-344154267/driving-me-crazy?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=a6d3400f69954c46b561eb800d81b431)" },
             { "title": "Medd In", "genre": "country", "soundcloud_link": "" }, 
-            { "title": "Wildest Dreams", "genre": "pop rock", "soundcloud_link": "https://soundcloud.com/user-344154267/wildest-dreams" },
+            { "title": "Wildest Dreams", "genre": "pop rock", "soundcloud_link": "[https://soundcloud.com/user-344154267/wildest-dreams](https://soundcloud.com/user-344154267/wildest-dreams)" },
             { "title": "Runnin Fore I Hit The Ground", "genre": "rock", "soundcloud_link": "" }, 
-            { "title": "My Little Feat Keep Me Runnin", "genre": "rock", "soundcloud_link": "https://soundcloud.com/user-344154267/my-little-feat-keep-me-runnin" },
-            { "title": "I Hit The Ground A Runnin", "genre": "hiphop", "soundcloud_link": "https://soundcloud.com/user-344154267/i-hit-the-ground-a-runnin-hip" },
+            { "title": "My Little Feat Keep Me Runnin", "genre": "rock", "soundcloud_link": "[https://soundcloud.com/user-344154267/my-little-feat-keep-me-runnin](https://soundcloud.com/user-344154267/my-little-feat-keep-me-runnin)" },
+            { "title": "I Hit The Ground A Runnin", "genre": "hiphop", "soundcloud_link": "[https://soundcloud.com/user-344154267/i-hit-the-ground-a-runnin-hip](https://soundcloud.com/user-344154267/i-hit-the-ground-a-runnin-hip)" },
             { "title": "Dream Drift", "genre": "blues", "soundcloud_link": "" }, 
-            { "title": "Barn Rockin", "genre": "rock", "soundcloud_link": "https://soundcloud.com/user-344154267/barn-rockin" }
+            { "title": "Barn Rockin", "genre": "rock", "soundcloud_link": "[https://soundcloud.com/user-344154267/barn-rockin](https://soundcloud.com/user-344154267/barn-rockin)" }
         ];
 
         const songListElement = document.getElementById('song-list');
