@@ -1,284 +1,250 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Song Catalogue | The Lyric Architect</title>
-    <!-- Load Tailwind CSS -->
-    <script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>
-    <style>
-        /* Custom styles for a clean, dark musical theme */
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #1a1a2e; /* Deep blue/purple background */
-            color: #e4e4e7; /* Light text for contrast */
-        }
-        .text-accent {
-            color: #ff6a3d; /* Bright orange/red for accents */
-        }
-        .card {
-            background-color: #2c2c54; /* Lighter background for content cards */
-        }
-        .genre-tag {
-            cursor: pointer;
-            transition: all 0.2s;
-            white-space: nowrap; /* Prevent wrapping inside the tag */
-        }
-        .genre-tag:hover {
-            box-shadow: 0 0 10px #ff6a3d;
-        }
-        /* Style for disabled/placeholder button */
-        .btn-disabled {
-            background-color: #4a4a6e;
-            color: #a0aec0;
-            cursor: not-allowed;
-            pointer-events: none;
-            box-shadow: none;
-            opacity: 0.8;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Song Catalogue | The Lyric Architect</title>
+<!-- Load Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+/* Custom styles for a clean, dark musical theme */
+body {
+font-family: 'Inter', sans-serif;
+}
+.container-bg {
+background-color: #1a1a2e; /* Deep blue/purple */
+}
+.text-accent {
+color: #ff6a3d; /* Bright orange/red for contrast */
+}
+.card {
+background-color: #2c2c54; /* Lighter background for content */
+}
+.genre-tag {
+cursor: pointer;
+transition: all 0.2s;
+}
+.genre-tag:hover {
+box-shadow: 0 0 10px #ff6a3d;
+}
+</style>
 </head>
-<body class="min-h-screen flex flex-col">
+<body class="container-bg min-h-screen text-gray-100 flex flex-col">
 
-    <!-- Navigation Bar -->
-    <nav class="bg-slate-900 shadow-xl sticky top-0 z-10">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <div class="flex items-center">
-                    <a href="./index.html" class="flex-shrink-0 text-2xl font-bold text-accent tracking-widest">
-                        THE LYRIC ARCHITECT
-                    </a>
-                </div>
-                <div class="flex space-x-4">
-                    <a href="./index.html" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white transition duration-150">Home</a>
-                    <a href="./about.html" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white transition duration-150">About</a>
-                    <a href="./catalogue.html" class="px-3 py-2 rounded-md text-sm font-medium bg-accent text-white transition duration-150">Song Catalogue</a>
-                </div>
+<!-- Navigation Bar -->
+<nav class="bg-slate-900 shadow-xl sticky top-0 z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+            <div class="flex items-center">
+                <a href="./index.html" class="flex-shrink-0 text-2xl font-bold text-accent tracking-widest">
+                    THE LYRIC ARCHITECT
+                </a>
+            </div>
+            <div class="flex space-x-4">
+                <a href="./index.html" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white transition duration-150">Home</a>
+                <a href="./about.html" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white transition duration-150">About</a>
+                <a href="./catalogue.html" class="px-3 py-2 rounded-md text-sm font-medium bg-accent text-white transition duration-150">Song Catalogue</a>
             </div>
         </div>
-    </nav>
+    </div>
+</nav>
 
-    <!-- Main Content Area -->
-    <main class="flex-grow py-12 px-4 sm:px-6 lg:px-8">
-        <div class="max-w-6xl mx-auto">
-            <header class="text-center mb-10">
-                <h1 class="text-5xl font-extrabold text-white mb-2">The Lyric Architect Song Catalogue</h1>
-                <p class="text-xl text-accent">Browse songs and check availability for licensing.</p>
-            </header>
+<!-- Main Content Area -->
+<main class="flex-grow py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-6xl mx-auto">
+        <header class="text-center mb-10">
+            <h1 class="text-5xl font-extrabold text-white mb-2">The Lyric Architect Song Catalogue</h1>
+            <p class="text-xl text-accent">Browse over 150 completed songs, filtered by genre.</p>
+        </header>
 
-            <!-- Genre Filter Section -->
-            <section class="card p-6 rounded-xl shadow-lg mb-8">
-                <h2 class="text-2xl font-semibold mb-4 text-white">Filter by Genre:</h2>
-                <div id="genre-filters" class="flex flex-wrap gap-2">
-                    <!-- Filters will be injected here by JavaScript -->
-                    <p class="text-gray-400" id="loading-filters">Loading filters...</p>
-                </div>
-            </section>
+        <!-- Genre Filter Section -->
+        <section class="card p-6 rounded-xl shadow-lg mb-8">
+            <h2 class="text-2xl font-semibold mb-4 text-white">Filter by Genre:</h2>
+            <div id="genre-filters" class="flex flex-wrap gap-2">
+                <!-- Filters will be injected here by JavaScript -->
+            </div>
+        </section>
 
-            <!-- Song List Section -->
-            <section class="card p-6 rounded-xl shadow-lg">
-                <h2 id="current-filter-title" class="text-3xl font-bold mb-6 text-white"></h2>
-                
-                <div id="song-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Song cards will be injected here by JavaScript -->
-                    <p class="text-gray-400 col-span-full" id="loading-songs">Loading songs...</p>
-                </div>
-                
-                <div id="no-results" class="text-center py-10 hidden">
-                    <p class="text-xl text-gray-400">No songs found for this genre.</p>
-                </div>
-            </section>
-        </div>
-    </main>
-
-    <!-- Footer -->
-    <footer class="bg-slate-900 mt-8 py-4 text-center text-gray-400 text-sm">
-        <p>&copy; 2024 The Lyric Architect. All Rights Reserved. | Rickie Lee Reeves</p>
-    </footer>
-
-    <script>
-        // Full list of songs and their corresponding metadata
-        const songs = [
-            { "title": "sports sports sports sports", "genre": "rap", "soundcloud_link": "[https://soundcloud.com/user-344154267/sports-sports-sports-sports](https://soundcloud.com/user-344154267/sports-sports-sports-sports)" },
-            { "title": "oopsie doopsie rap version", "genre": "rap", "soundcloud_link": "[https://soundcloud.com/user-344154267/oopsie-doopsie-rap-version?in=user-344154267/sets/rap-hip-gospel](https://soundcloud.com/user-344154267/oopsie-doopsie-rap-version?in=user-344154267/sets/rap-hip-gospel)" },
-            { "title": "sports sports sports sports 1", "genre": "hiphop", "soundcloud_link": "[https://soundcloud.com/user-344154267/sports-sports-sports-sports-1](https://soundcloud.com/user-344154267/sports-sports-sports-sports-1)" },
-            { "title": "had to be bad before you were", "genre": "hiphop", "soundcloud_link": "[https://soundcloud.com/user-344154267/had-to-be-bad-before-you-were](https://soundcloud.com/user-344154267/had-to-be-bad-before-you-were)" },
-            { "title": "stone cold eyes a rocker", "genre": "blues", "soundcloud_link": "" }, 
-            { "title": "my lyrics in the air", "genre": "other", "soundcloud_link": "" }, 
-            { "title": "a bottom", "genre": "country", "soundcloud_link": "" }, 
-            { "title": "dont think me crazy 1", "genre": "country", "soundcloud_link": "[https://soundcloud.com/user-344154267/dont-think-me-crazy-1?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=d325f9a160234be2af44da63cb209858](https://soundcloud.com/user-344154267/dont-think-me-crazy-1?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=d325f9a160234be2af44da63cb209858)" },
-            { "title": "harmonica blues stomp 7", "genre": "country", "soundcloud_link": "" }, 
-            { "title": "cant love no woman", "genre": "country", "soundcloud_link": "[https://soundcloud.com/user-344154267/cant-love-no-woman?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=f9d6c2ab496042c6b76868b2370bbbd5](https://soundcloud.com/user-344154267/cant-love-no-woman?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=f9d6c2ab496042c6b76868b2370bbbd5)" },
-            { "title": "you were too good for me", "genre": "pop rock", "soundcloud_link": "[https://soundcloud.com/user-344154267/you-were-too-good-for-me](https://soundcloud.com/user-344154267/you-were-too-good-for-me)" },
-            { "title": "The Last Juke on the 99", "genre": "blues", "soundcloud_link": "" }, 
-            { "title": "Keep Getting Worse", "genre": "blues", "soundcloud_link": "[https://soundcloud.com/user-344154267/keep-getting-worse?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=632c19d5ce164921b351c560d927124f](https://soundcloud.com/user-344154267/keep-getting-worse?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=632c19d5ce164921b351c560d927124f)" },
-            { "title": "Dehydrated All Dried Up", "genre": "blues", "soundcloud_link": "[https://soundcloud.com/user-344154267/dehydrated-all-dried-up?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=92448ad4c9dc43c9a6beaf24a820d0b6](https://soundcloud.com/user-344154267/dehydrated-all-dried-up?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=92448ad4c9dc43c9a6beaf24a820d0b6)" },
-            { "title": "Said Freedom", "genre": "rock", "soundcloud_link": "[https://soundcloud.com/user-344154267/said-freedom-1?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=189bae2f8cc14931a1eb25bd1cc3fadd](https://soundcloud.com/user-344154267/said-freedom-1?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=189bae2f8cc14931a1eb25bd1cc3fadd)" },
-            { "title": "Liar Liar Dicks On Fire", "genre": "rock", "soundcloud_link": "" }, 
-            { "title": "Hotel Blues", "genre": "blues", "soundcloud_link": "[https://soundcloud.com/user-344154267/hotel-blues-1?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=425c56fdf32447359ae2e7232ff3648c](https://soundcloud.com/user-344154267/hotel-blues-1?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=425c56fdf32447359ae2e7232ff3648c)" },
-            { "title": "High Up On That Mountain", "genre": "gospel", "soundcloud_link": "[https://soundcloud.com/user-344154267/high-up-on-that-mountain?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=811068000ff04648a735cd197499cba0](https://soundcloud.com/user-344154267/high-up-on-that-mountain?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=811068000ff04648a735cd197499cba0)" },
-            { "title": "Why Worry About It", "genre": "rock", "soundcloud_link": "" }, 
-            { "title": "New World Order No Kings", "genre": "rock", "soundcloud_link": "[https://soundcloud.com/user-344154267/new-world-order-no-kings?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=7cf25e55de444e61a8f81c6d3af25485](https://soundcloud.com/user-344154267/new-world-order-no-kings?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=7cf25e55de444e61a8f81c6d3af25485)" },
-            { "title": "Too High Gotta Go Down", "genre": "rock", "soundcloud_link": "[https://soundcloud.com/user-344154267/too-high-gotta-go-down?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=493c8a0e1aae462d92e6868b2c81be08](https://soundcloud.com/user-344154267/too-high-gotta-go-down?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=493c8a0e1aae462d92e6868b2c81be08)" },
-            { "title": "2 Outa 3 Ain't Bad", "genre": "rock", "soundcloud_link": "" }, 
-            { "title": "Show Me Don't Tell Me", "genre": "rock", "soundcloud_link": "[https://soundcloud.com/user-344154267/show-me-dont-tell-me?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=1d56fe60a143437aa2e3421b82c5e464](https://soundcloud.com/user-344154267/show-me-dont-tell-me?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=1d56fe60a143437aa2e3421b82c5e464)" },
-            { "title": "Hungry", "genre": "rock", "soundcloud_link": "" }, 
-            { "title": "Happiness Remix 1", "genre": "rock", "soundcloud_link": "" }, 
-            { "title": "Happiness Remix 2", "genre": "rock", "soundcloud_link": "[https://soundcloud.com/user-344154267/happiness-remix-2?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=409c9d6975894efd85aa4fbd3e502f52](https://soundcloud.com/user-344154267/happiness-remix-2?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=409c9d6975894efd85aa4fbd3e502f52)" },
-            { "title": "Red Beans and Rice", "genre": "rock", "soundcloud_link": "" }, 
-            { "title": "Devil Tried to Take My Soul 1", "genre": "gospel", "soundcloud_link": "" }, 
-            { "title": "Devil Tried to Take My Soul 2", "genre": "gospel", "soundcloud_link": "[https://soundcloud.com/user-344154267/devil-tried-to-take-my-soul-2?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=ae8cda6b8f414e4fb9e39a806e45134f](https://soundcloud.com/user-344154267/devil-tried-to-take-my-soul-2?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=ae8cda6b8f414e4fb9e39a806e45134f)" },
-            { "title": "Devil Tried Harp", "genre": "gospel", "soundcloud_link": "" }, 
-            { "title": "1 of the 10 G Harp", "genre": "gospel", "soundcloud_link": "[https://soundcloud.com/user-344154267/1-of-the-10-g-harp?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=ab3442e96bb14eb4a4906fa4805a942f](https://soundcloud.com/user-344154267/1-of-the-10-g-harp?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=ab3442e96bb14eb4a4906fa4805a942f)" },
-            { "title": "Another Dollar", "genre": "blues", "soundcloud_link": "[https://soundcloud.com/user-344154267/another-dollar-2?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=97cf922f3c6c4b61959a8dd269df3019](https://soundcloud.com/user-344154267/another-dollar-2?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=97cf922f3c6c4b61959a8dd269df3019)" },
-            { "title": "Cross Harp", "genre": "blues", "soundcloud_link": "" }, 
-            { "title": "Evil Man", "genre": "blues", "soundcloud_link": "" }, 
-            { "title": "Driving Me Crazy", "genre": "blues", "soundcloud_link": "[https://soundcloud.com/user-344154267/driving-me-crazy?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=a6d3400f69954c46b561eb800d81b431](https://soundcloud.com/user-344154267/driving-me-crazy?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=a6d3400f69954c46b561eb800d81b431)" },
-            { "title": "Medd In", "genre": "country", "soundcloud_link": "" }, 
-            { "title": "Wildest Dreams", "genre": "pop rock", "soundcloud_link": "[https://soundcloud.com/user-344154267/wildest-dreams](https://soundcloud.com/user-344154267/wildest-dreams)" },
-            { "title": "Runnin Fore I Hit The Ground", "genre": "rock", "soundcloud_link": "" }, 
-            { "title": "My Little Feat Keep Me Runnin", "genre": "rock", "soundcloud_link": "[https://soundcloud.com/user-344154267/my-little-feat-keep-me-runnin](https://soundcloud.com/user-344154267/my-little-feat-keep-me-runnin)" },
-            { "title": "I Hit The Ground A Runnin", "genre": "hiphop", "soundcloud_link": "[https://soundcloud.com/user-344154267/i-hit-the-ground-a-runnin-hip](https://soundcloud.com/user-344154267/i-hit-the-ground-a-runnin-hip)" },
-            { "title": "Dream Drift", "genre": "blues", "soundcloud_link": "" }, 
-            { "title": "Barn Rockin", "genre": "rock", "soundcloud_link": "[https://soundcloud.com/user-344154267/barn-rockin](https://soundcloud.com/user-344154267/barn-rockin)" }
-        ];
-
-        const songListElement = document.getElementById('song-list');
-        const filtersElement = document.getElementById('genre-filters');
-        const filterTitleElement = document.getElementById('current-filter-title');
-        const noResultsElement = document.getElementById('no-results');
-        const loadingSongsElement = document.getElementById('loading-songs');
-        const loadingFiltersElement = document.getElementById('loading-filters');
-
-
-        // Function to normalize genre names (lowercase and trim whitespace)
-        const normalizeGenre = (genre) => genre.toLowerCase().trim();
-
-        // Function to render a single song card
-        const renderSongCard = (song) => {
-            const normalizedGenre = normalizeGenre(song.genre);
-            // Check if the link is a non-empty string that starts with 'http'
-            const hasLink = song.soundcloud_link && song.soundcloud_link.startsWith('http');
+        <!-- Song List Section -->
+        <section class="card p-6 rounded-xl shadow-lg">
+            <h2 id="current-filter-title" class="text-3xl font-bold mb-6 text-white">Showing All Songs</h2>
             
-            // Determine button class and content based on link availability
-            const buttonClass = hasLink
-                ? 'bg-accent hover:bg-orange-600 text-slate-900 font-semibold'
-                : 'btn-disabled'; // Custom disabled style
+            <div id="song-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Song cards will be injected here by JavaScript -->
+            </div>
             
-            const buttonText = hasLink
-                ? 'Listen on SoundCloud'
-                : 'Link Unavailable (Updating)';
+            <div id="no-results" class="text-center py-10 hidden">
+                <p class="text-xl text-gray-400">No songs found for this genre.</p>
+            </div>
+        </section>
+    </div>
+</main>
 
+<!-- Footer -->
+<footer class="bg-slate-900 mt-8 py-4 text-center text-gray-400 text-sm">
+    <p>&copy; 2024 The Lyric Architect. All Rights Reserved. | Rickie Lee Reeves</p>
+</footer>
+
+<script>
+    // Full, updated list of songs and their corresponding metadata
+    const songs = [
+        { "title": "sports sports sports sports", "genre": "rap", "soundcloud_link": "https://soundcloud.com/user-344154267/sports-sports-sports-sports" },
+        { "title": "oopsie doopsie rap version", "genre": "rap", "soundcloud_link": "https://soundcloud.com/user-344154267/oopsie-doopsie-rap-version?in=user-344154267/sets/rap-hip-gospel" },
+        { "title": "sports sports sports sports 1", "genre": "hiphop", "soundcloud_link": "https://soundcloud.com/user-344154267/sports-sports-sports-sports-1" },
+        { "title": "had to be bad before you were", "genre": "hiphop", "soundcloud_link": "https://soundcloud.com/user-344154267/had-to-be-bad-before-you-were" },
+        { "title": "stone cold eyes a rocker", "genre": "stone cold blues eyes", "soundcloud_link": "https://soundcloud.com/user-344154267/stone-cold-eyes-a-rocker" },
+        { "title": "my lyrics in the air", "genre": "lyrics in the Air", "soundcloud_link": "https://soundcloud.com/user-344154267/my-lyrics-in-the-air" },
+        { "title": "a bottom", "genre": "lyrics in the air", "soundcloud_link": "https://www.google.com/search?q=https://soundcloud.com/user-344154267/a-bottom-with-your-name-on-it%3Fin%3Duser-344154267/sets/country-counry-rock" },
+        { "title": "dont think me crazy 1", "genre": "country", "soundcloud_link": "https://soundcloud.com/user-344154267/dont-think-me-crazy-1?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=d325f9a160234be2af44da63cb209858" },
+        { "title": "harmonica blues stomp 7", "genre": "country", "soundcloud_link": "https://soundcloud.com/user-344154267/harmonica-blues-stomp-7?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=0f6a30c81e2841c0a138de43a25b3ba2" },
+        { "title": "cant love no woman", "genre": "country", "soundcloud_link": "https://soundcloud.com/user-344154267/cant-love-no-woman?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=f9d6c2ab496042c6b76868b2370bbbd5" },
+        { "title": "you were too good for me", "genre": "neo pop rock", "soundcloud_link": "https://soundcloud.com/user-344154267/you-were-too-good-for-me" },
+        { "title": "The Last Juke on the 99", "genre": "blues", "soundcloud_link": "https://soundcloud.com/user-344154267/the-last-juke-on-the-99-1?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=2cc634d47f88497990c1bb093ecaaa78" },
+        { "title": "Keep Getting Worse", "genre": "blues", "soundcloud_link": "https://soundcloud.com/user-344154267/keep-getting-worse?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=632c19d5ce164921b351c560d927124f" },
+        { "title": "Dehydrated All Dried Up", "genre": "blues", "soundcloud_link": "https://soundcloud.com/user-344154267/dehydrated-all-dried-up?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=92448ad4c9dc43c9a6beaf24a820d0b6" },
+        { "title": "Said Freedom", "genre": "rock", "soundcloud_link": "https://soundcloud.com/user-344154267/said-freedom-1?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=189bae2f8cc14931a1eb25bd1cc3fadd" },
+        { "title": "Liar Liar Dicks On Fire", "genre": "rock", "soundcloud_link": "https://soundcloud.com/user-344154267/liar-liar-dicks-on-fire?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=300be3fc5caa4bd1bb95fc0f793f6a2d" },
+        { "title": "Hotel Blues", "genre": "blues", "soundcloud_link": "https://soundcloud.com/user-344154267/hotel-blues-1?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=425c56fdf32447359ae2e7232ff3648c" },
+        { "title": "High Up On That Mountain", "genre": "gospel", "soundcloud_link": "https://soundcloud.com/user-344154267/high-up-on-that-mountain?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=811068000ff04648a735cd197499cba0" },
+        { "title": "Why Worry About It", "genre": "rock", "soundcloud_link": "https://soundcloud.com/user-344154267/why-worry-about-it-1?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=fca4e4e509504a16886b187158d71688" },
+        { "title": "New World Order No Kings", "genre": "rock", "soundcloud_link": "https://soundcloud.com/user-344154267/new-world-order-no-kings?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=7cf25e55de444e61a8f81c6d3af25485" },
+        { "title": "Too High Gotta Go Down", "genre": "rock", "soundcloud_link": "https://soundcloud.com/user-344154267/too-high-gotta-go-down?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=493c8a0e1aae462d92e6868b2c81be08" },
+        { "title": "2 Outa 3 Ain't Bad", "genre": "rock", "soundcloud_link": "https://soundcloud.com/user-344154267/2-outa-3-aint-bad-1?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=4500f5962d354ab1ba3830635f840a76" },
+        { "title": "Show Me Don't Tell Me", "genre": "rock", "soundcloud_link": "https://soundcloud.com/user-344154267/show-me-dont-tell-me?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=1d56fe60a143437aa2e3421b82c5e464" },
+        { "title": "Hungry", "genre": "rock", "soundcloud_link": "https://soundcloud.com/user-344154267/hungry-2?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=d5ab37ff92c742f0b9d31c5c91a780ab" },
+        { "title": "Happiness Remix 1", "genre": "rock", "soundcloud_link": "https://soundcloud.com/user-344154267/happiness-remix-1?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=f514a525b2cd4e57b748a543c050e67e" },
+        { "title": "Happiness Remix 2", "genre": "rock", "soundcloud_link": "https://soundcloud.com/user-344154267/happiness-remix-2?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=409c9d6975894efd85aa4fbd3e502f52" },
+        { "title": "Red Beans and Rice", "genre": "rock", "soundcloud_link": "https://soundcloud.com/user-344154267/red-beans-and-rice?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=a6acc3091dce40f591982ec931539240" },
+        { "title": "Devil Tried to Take My Soul 1", "genre": "gospel", "soundcloud_link": "https://soundcloud.com/user-344154267/devil-tried-1-1?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=581a69b92d8049b4b24680ca2fd81eed" },
+        { "title": "Devil Tried to Take My Soul 2", "genre": "gospel", "soundcloud_link": "https://soundcloud.com/user-344154267/devil-tried-to-take-my-soul-2?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=ae8cda6b8f414e4fb9e39a806e45134f" },
+        { "title": "Devil Tried Harp", "genre": "gospel", "soundcloud_link": "https://www.google.com/search?q=https://soundcloud.com/user-344154267/devil-tried-1-2-harp%3Futm_source%3Dclipboard%26utm_medium%3Dtext%26utm_campaign%3Dsocial_sharing%26si%3Db385fd2cb2f77329b0f2e09ccbdf2b6d" },
+        { "title": "1 of the 10 G Harp", "genre": "gospel", "soundcloud_link": "https://soundcloud.com/user-344154267/1-of-the-10-g-harp?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=ab3442e96bb14eb4a4906fa4805a942f" },
+        { "title": "Another Dollar", "genre": "blues", "soundcloud_link": "https://soundcloud.com/user-344154267/another-dollar-2?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=97cf922f3c6c4b61959a8dd269df3019" },
+        { "title": "Cross Harp", "genre": "blues", "soundcloud_link": "https://soundcloud.com/user-344154267/cross-harp-2?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=09ab3b28e8fa4023b36947bdfafe9869" },
+        { "title": "Evil Man", "genre": "blues", "soundcloud_link": "https://www.google.com/search?q=https://soundcloud.com/user-344154267/evil-man-1%3Futm_source%3Dclipboard%26utm_medium%3Dtext%26utm_campaign%3Dsocial_sharing%26si%3D1980e42740264b09bf394648f236ae61" },
+        { "title": "Driving Me Crazy", "genre": "blues", "soundcloud_link": "https://soundcloud.com/user-344154267/driving-me-crazy?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=a6d3400f69954c46b561eb800d81b431" },
+        { "title": "Medd In", "genre": "country", "soundcloud_link": "https://soundcloud.com/user-344154267/medd-in?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&si=3fcdf1d252cf4926a7ab1bc75b504b53" },
+        { "title": "Wildest Dreams", "genre": "pop rock", "soundcloud_link": "https://www.google.com/search?q=https://soundcloud.com/user-344154267/wildest-dreams" },
+        { "title": "Runnin Fore I Hit The Ground", "genre": "txmx", "soundcloud_link": "https://soundcloud.com/user-344154267/runnin-fore-i-hit-the-ground" },
+        { "title": "My Little Feat Keep Me Runnin", "genre": "little feat", "soundcloud_link": "https://soundcloud.com/user-344154267/my-little-feat-keep-me-runnin" },
+        { "title": "I Hit The Ground A Runnin", "genre": "hip rap", "soundcloud_link": "https://soundcloud.com/user-344154267/i-hit-the-ground-a-runnin-hip" },
+        { "title": "Dream Drift", "genre": "blues dream drift", "soundcloud_link": "https://soundcloud.com/user-344154267/dream-drift" },
+        { "title": "Barn Rockin", "genre": "blues barn rockin'", "soundcloud_link": "https://soundcloud.com/user-344154267/barn-rockin" }
+        
+        , // <--- NOTE: Added comma here for the next entries --->
+        { "title": "Deceiver", "genre": "soul r&b rock", "soundcloud_link": "https://soundcloud.com/user-344154267/deceiver" },
+        { "title": "I Can't Afford Free", "genre": "pop rock", "soundcloud_link": "https://soundcloud.com/user-344154267/i-cant-afford-free" },
+        { "title": "Cryin' Shame", "genre": "rap hiphop r&b", "soundcloud_link": "https://soundcloud.com/user-344154267/cryn-shame" }
+        // <--- ADD NEW SONGS HERE (MUST include a comma after the previous song) --->
+    ];
+
+    const songListElement = document.getElementById('song-list');
+    const filtersElement = document.getElementById('genre-filters');
+    const filterTitleElement = document.getElementById('current-filter-title');
+    const noResultsElement = document.getElementById('no-results');
+
+    
+    // Function to normalize genre names (lowercase and trim whitespace)
+    const normalizeGenre = (genre) => genre.toLowerCase().trim();
+
+    // Function to render a single song card
+    const renderSongCard = (song) => {
+        const normalizedGenre = normalizeGenre(song.genre);
+        
+        return `
+            <div class="card p-5 rounded-xl shadow-xl hover:shadow-2xl transition duration-300 transform hover:scale-[1.02] border-b-4 border-accent/70">
+                <h3 class="text-xl font-bold mb-2 text-white capitalize">${song.title}</h3>
+                <p class="text-sm text-gray-400 mb-4">Genre: <span class="text-accent/90 capitalize">${normalizedGenre}</span></p>
+                <a href="${song.soundcloud_link}" target="_blank" rel="noopener noreferrer" 
+                   class="inline-block bg-accent hover:bg-orange-600 text-slate-900 font-semibold py-2 px-4 rounded-full transition duration-150 text-sm">
+                    Listen on SoundCloud
+                </a>
+            </div>
+        `;
+    };
+
+    // Function to render the filtered song list
+    const renderSongs = (filteredSongs, currentGenre) => {
+        songListElement.innerHTML = '';
+        
+        if (filteredSongs.length === 0) {
+            songListElement.classList.add('hidden');
+            noResultsElement.classList.remove('hidden');
+        } else {
+            songListElement.classList.remove('hidden');
+            noResultsElement.classList.add('hidden');
+            
+            const html = filteredSongs.map(renderSongCard).join('');
+            songListElement.innerHTML = html;
+        }
+
+        const titleText = currentGenre === 'all' ? 'Showing All Songs' : `Showing Genre: ${currentGenre.toUpperCase()}`;
+        filterTitleElement.textContent = titleText;
+        
+        // Update active filter button
+        document.querySelectorAll('.genre-tag').forEach(btn => {
+            btn.classList.remove('bg-accent', 'text-slate-900', 'bg-gray-600', 'text-white');
+            if (normalizeGenre(btn.dataset.genre) === currentGenre) {
+                btn.classList.add('bg-accent', 'text-slate-900');
+            } else {
+                btn.classList.add('bg-gray-600', 'text-white');
+            }
+        });
+    };
+
+    // Function to handle filtering logic
+    const filterSongs = (genre) => {
+        const normalizedGenre = normalizeGenre(genre);
+
+        if (normalizedGenre === 'all') {
+            renderSongs(songs, 'all');
+        } else {
+            const filtered = songs.filter(song => normalizeGenre(song.genre) === normalizedGenre);
+            renderSongs(filtered, normalizedGenre);
+        }
+    };
+
+    // Function to create and attach genre filter buttons
+    const createGenreFilters = () => {
+        // 1. Get unique genres (normalized)
+        const uniqueGenres = [...new Set(songs.map(song => normalizeGenre(song.genre)))].sort();
+
+        // 2. Add the 'All Songs' button first
+        let genreButtonsHtml = `
+            <button class="genre-tag bg-accent text-slate-900 px-4 py-2 rounded-full text-sm font-medium hover:bg-orange-600" data-genre="all">
+                All Songs (${songs.length})
+            </button>
+        `;
+
+        // 3. Generate buttons for each unique genre
+        genreButtonsHtml += uniqueGenres.map(genre => {
+            const count = songs.filter(song => normalizeGenre(song.genre) === genre).length;
             return `
-                <div class="card p-5 rounded-xl shadow-xl hover:shadow-2xl transition duration-300 transform hover:scale-[1.02] border-b-4 border-accent/70">
-                    <h3 class="text-xl font-bold mb-2 text-white capitalize">${song.title}</h3>
-                    <p class="text-sm text-gray-400 mb-4">Genre: <span class="text-accent/90 capitalize">${normalizedGenre}</span></p>
-                    
-                    <a href="${hasLink ? song.soundcloud_link : '#'}" 
-                       ${hasLink ? 'target="_blank" rel="noopener noreferrer"' : ''}
-                       class="inline-block ${buttonClass} py-2 px-4 rounded-full transition duration-150 text-sm">
-                        ${buttonText}
-                    </a>
-                </div>
-            `;
-        };
-
-        // Function to render the filtered song list
-        const renderSongs = (filteredSongs, currentGenre) => {
-            // Clear current song list
-            songListElement.innerHTML = '';
-            
-            if (filteredSongs.length === 0) {
-                songListElement.classList.add('hidden');
-                noResultsElement.classList.remove('hidden');
-            } else {
-                songListElement.classList.remove('hidden');
-                noResultsElement.classList.add('hidden');
-                
-                const html = filteredSongs.map(renderSongCard).join('');
-                songListElement.innerHTML = html;
-            }
-
-            const titleText = currentGenre === 'all' ? 'Showing All Songs' : `Showing Genre: ${currentGenre.toUpperCase()}`;
-            filterTitleElement.textContent = titleText;
-            
-            // Update active filter button appearance
-            document.querySelectorAll('.genre-tag').forEach(btn => {
-                btn.classList.remove('bg-accent', 'text-slate-900', 'bg-gray-600', 'text-white');
-                if (normalizeGenre(btn.dataset.genre) === currentGenre) {
-                    btn.classList.add('bg-accent', 'text-slate-900');
-                } else {
-                    btn.classList.add('bg-gray-600', 'text-white');
-                }
-            });
-        };
-
-        // Function to handle filtering logic
-        const filterSongs = (genre) => {
-            const normalizedGenre = normalizeGenre(genre);
-
-            if (normalizedGenre === 'all') {
-                renderSongs(songs, 'all');
-            } else {
-                const filtered = songs.filter(song => normalizeGenre(song.genre) === normalizedGenre);
-                renderSongs(filtered, normalizedGenre);
-            }
-        };
-
-        // Function to create and attach genre filter buttons
-        const createGenreFilters = () => {
-            // Remove the loading message if it exists
-            if (loadingFiltersElement) {
-                loadingFiltersElement.remove();
-            }
-
-            // 1. Get unique genres (normalized)
-            const uniqueGenres = [...new Set(songs.map(song => normalizeGenre(song.genre)))].sort();
-
-            // 2. Add the 'All Songs' button first
-            let genreButtonsHtml = `
-                <button class="genre-tag bg-accent text-slate-900 px-4 py-2 rounded-full text-sm font-medium hover:bg-orange-600" data-genre="all">
-                    All Songs (${songs.length})
+                <button class="genre-tag bg-gray-600 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-gray-500 capitalize" data-genre="${genre}">
+                    ${genre} (${count})
                 </button>
             `;
+        }).join('');
 
-            // 3. Generate buttons for each unique genre
-            genreButtonsHtml += uniqueGenres.map(genre => {
-                const count = songs.filter(song => normalizeGenre(song.genre) === genre).length;
-                return `
-                    <button class="genre-tag bg-gray-600 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-gray-500 capitalize" data-genre="${genre}">
-                        ${genre} (${count})
-                    </button>
-                `;
-            }).join('');
+        // 4. Insert into the DOM
+        filtersElement.innerHTML = genreButtonsHtml;
 
-            // 4. Insert into the DOM
-            filtersElement.innerHTML = genreButtonsHtml;
-
-            // 5. Attach click listeners to all buttons
-            // Using event delegation on the filters container
-            filtersElement.addEventListener('click', (event) => {
-                const target = event.target.closest('.genre-tag');
-                if (target) {
-                    filterSongs(target.dataset.genre);
-                }
-            });
-        };
-        
-        // Main initialization function
-        const initializeCatalogue = () => {
-            // Remove the loading message if it exists
-            if (loadingSongsElement) {
-                loadingSongsElement.remove();
+        // 5. Attach click listeners to all buttons
+        filtersElement.addEventListener('click', (event) => {
+            const target = event.target.closest('.genre-tag');
+            if (target) {
+                filterSongs(target.dataset.genre);
             }
+        });
+    };
 
-            createGenreFilters();
-            // Display all songs by default (initial filter)
-            filterSongs('all');
-        };
+    // Initialize the page on load
+    window.onload = () => {
+        createGenreFilters();
+        // Display all songs by default (initial filter)
+        filterSongs('all');
+    };
+</script>
 
-        // Initialize the page once the DOM is fully loaded (best practice for scripts at the end of the body)
-        document.addEventListener('DOMContentLoaded', initializeCatalogue);
-    </script>
 </body>
 </html>
