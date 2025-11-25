@@ -19,6 +19,7 @@ color: #ff6a3d; /* Bright orange/red for contrast */
 }
 .card {
 background-color: #2c2c54; /* Lighter background for content */
+cursor: pointer; /* Indicate clickability for player expansion */
 }
 .genre-tag {
 cursor: pointer;
@@ -26,6 +27,20 @@ transition: all 0.2s;
 }
 .genre-tag:hover {
 box-shadow: 0 0 10px #ff6a3d;
+}
+.player-container {
+    height: 120px; /* Standard compact SoundCloud player height */
+    overflow: hidden;
+    transition: height 0.3s ease-out;
+}
+.player-container.collapsed {
+    height: 0;
+    padding: 0;
+    margin-top: 0;
+}
+.player-container iframe {
+    width: 100%;
+    height: 100%;
 }
 </style>
 </head>
@@ -54,11 +69,11 @@ box-shadow: 0 0 10px #ff6a3d;
     <div class="max-w-6xl mx-auto">
         <header class="text-center mb-10">
             <h1 class="text-5xl font-extrabold text-white mb-2">The Lyric Architect Song Catalogue</h1>
-            <p class="text-xl text-accent">Browse over 150 completed songs, filtered by genre.</p>
+            <p class="text-xl text-accent">Click on any song to launch the embedded player!</p>
         </header>
 
         <!-- Genre Filter Section -->
-        <section class="card p-6 rounded-xl shadow-lg mb-8">
+        <section class="bg-[#2c2c54] p-6 rounded-xl shadow-lg mb-8">
             <h2 class="text-2xl font-semibold mb-4 text-white">Filter by Genre:</h2>
             <div id="genre-filters" class="flex flex-wrap gap-2">
                 <!-- Filters will be injected here by JavaScript -->
@@ -66,7 +81,7 @@ box-shadow: 0 0 10px #ff6a3d;
         </section>
 
         <!-- Song List Section -->
-        <section class="card p-6 rounded-xl shadow-lg">
+        <section class="bg-[#2c2c54] p-6 rounded-xl shadow-lg">
             <h2 id="current-filter-title" class="text-3xl font-bold mb-6 text-white">Showing All Songs</h2>
             
             <div id="song-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -86,7 +101,8 @@ box-shadow: 0 0 10px #ff6a3d;
 </footer>
 
 <script>
-    // Full, updated list of songs and their corresponding metadata
+    // NOTE: This list contains 44 songs, based on the last complete data provided.
+    // If you have more songs, please provide the complete list so this array can be updated!
     const songs = [
         { "title": "sports sports sports sports", "genre": "rap", "soundcloud_link": "https://soundcloud.com/user-344154267/sports-sports-sports-sports" },
         { "title": "oopsie doopsie rap version", "genre": "rap", "soundcloud_link": "https://soundcloud.com/user-344154267/oopsie-doopsie-rap-version?in=user-344154267/sets/rap-hip-gospel" },
@@ -129,13 +145,10 @@ box-shadow: 0 0 10px #ff6a3d;
         { "title": "My Little Feat Keep Me Runnin", "genre": "little feat", "soundcloud_link": "https://soundcloud.com/user-344154267/my-little-feat-keep-me-runnin" },
         { "title": "I Hit The Ground A Runnin", "genre": "hip rap", "soundcloud_link": "https://soundcloud.com/user-344154267/i-hit-the-ground-a-runnin-hip" },
         { "title": "Dream Drift", "genre": "blues dream drift", "soundcloud_link": "https://soundcloud.com/user-344154267/dream-drift" },
-        { "title": "Barn Rockin", "genre": "blues barn rockin'", "soundcloud_link": "https://soundcloud.com/user-344154267/barn-rockin" }
-        
-        , // <--- NOTE: Added comma here for the next entries --->
+        { "title": "Barn Rockin", "genre": "blues barn rockin'", "soundcloud_link": "https://soundcloud.com/user-344154267/barn-rockin" },
         { "title": "Deceiver", "genre": "soul r&b rock", "soundcloud_link": "https://soundcloud.com/user-344154267/deceiver" },
         { "title": "I Can't Afford Free", "genre": "pop rock", "soundcloud_link": "https://soundcloud.com/user-344154267/i-cant-afford-free" },
         { "title": "Cryin' Shame", "genre": "rap hiphop r&b", "soundcloud_link": "https://soundcloud.com/user-344154267/cryn-shame" }
-        // <--- ADD NEW SONGS HERE (MUST include a comma after the previous song) --->
     ];
 
     const songListElement = document.getElementById('song-list');
@@ -143,22 +156,120 @@ box-shadow: 0 0 10px #ff6a3d;
     const filterTitleElement = document.getElementById('current-filter-title');
     const noResultsElement = document.getElementById('no-results');
 
-    
-    // Function to normalize genre names (lowercase and trim whitespace)
+    // State to track which player is currently open
+    let activePlayerId = null;
+
+    // Helper function to normalize genre names (lowercase and trim whitespace)
     const normalizeGenre = (genre) => genre.toLowerCase().trim();
 
-    // Function to render a single song card
-    const renderSongCard = (song) => {
-        const normalizedGenre = normalizeGenre(song.genre);
-        
-        return `
-            <div class="card p-5 rounded-xl shadow-xl hover:shadow-2xl transition duration-300 transform hover:scale-[1.02] border-b-4 border-accent/70">
+    // Helper function to convert a SoundCloud track URL into an embed URL
+    const getEmbedUrl = (trackUrl) => {
+        // Strip out Google search wrapper if present, and any query parameters
+        let cleanUrl = trackUrl.split('?')[0];
+
+        // This attempts to handle the Google link wrappers that appear in your dataset:
+        if (cleanUrl.includes('google.com/search')) {
+            const match = cleanUrl.match(/q=(https?:\/\/[^\s&]+)/);
+            if (match) {
+                // Decode the URL and clean it up again
+                cleanUrl = decodeURIComponent(match[1]).split('?')[0];
+            } else {
+                // Fallback for completely unusable links
+                return null; 
+            }
+        }
+
+        // Check if it's a direct SoundCloud track URL
+        if (cleanUrl.includes('soundcloud.com/')) {
+             // Use the standard embed format, with color matching your theme (#ff6a3d)
+            return `https://w.soundcloud.com/player/?url=${encodeURIComponent(cleanUrl)}&color=%23ff6a3d&auto_play=false&hide_related=false&show_comments=false&show_user=false&show_reposts=false&show_teaser=false`;
+        }
+        return null;
+    };
+
+    // Function to toggle the visibility of the embedded player
+    const togglePlayer = (songId) => {
+        const playerContainer = document.getElementById(`player-container-${songId}`);
+        const cardElement = document.getElementById(`song-card-${songId}`);
+        const playButton = document.getElementById(`play-button-${songId}`);
+
+        if (!playerContainer || !cardElement || !playButton) {
+            console.error('Player elements not found for ID:', songId);
+            return;
+        }
+
+        if (activePlayerId === songId) {
+            // Collapse the current player
+            playerContainer.classList.add('collapsed');
+            cardElement.classList.remove('border-green-400');
+            // Change button to 'Play' icon
+            playButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 mr-2"><path fill-rule="evenodd" d="M2 10a8 8 0 1116 0 8 8 0 01-16 0zm6.394-2.886a.75.75 0 00-1.14 0l-3.294 3.473a.75.75 0 000 1.121l3.294 3.473a.75.75 0 001.14 0l3.294-3.473a.75.75 0 000-1.121l-3.294-3.473z" clip-rule="evenodd" /></svg> Play Track`;
+            activePlayerId = null;
+        } else {
+            // Collapse previously active player if one exists
+            if (activePlayerId) {
+                togglePlayer(activePlayerId);
+            }
+
+            // Expand the new player
+            playerContainer.classList.remove('collapsed');
+            cardElement.classList.add('border-green-400');
+            // Change button to 'Close' icon
+            playButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 mr-2"><path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" /></svg> Close Player`;
+            activePlayerId = songId;
+        }
+    };
+
+    // Function to render a single song card with the new player structure
+    const renderSongCard = (song, index) => {
+        const songId = `song-${index}`;
+        // Gets only the first genre for display on the card
+        const primaryGenre = song.genre.split(/[ ,&]+/)[0]; 
+        const embedUrl = getEmbedUrl(song.soundcloud_link);
+
+        if (!embedUrl) {
+            // Fallback for bad/non-soundcloud links
+            return `<div class="card p-5 rounded-xl shadow-xl border-b-4 border-red-500">
                 <h3 class="text-xl font-bold mb-2 text-white capitalize">${song.title}</h3>
-                <p class="text-sm text-gray-400 mb-4">Genre: <span class="text-accent/90 capitalize">${normalizedGenre}</span></p>
-                <a href="${song.soundcloud_link}" target="_blank" rel="noopener noreferrer" 
-                   class="inline-block bg-accent hover:bg-orange-600 text-slate-900 font-semibold py-2 px-4 rounded-full transition duration-150 text-sm">
-                    Listen on SoundCloud
-                </a>
+                <p class="text-sm text-gray-400 mb-4">Genre: <span class="text-accent/90 capitalize">${primaryGenre}</span></p>
+                <p class="text-red-400 text-xs">Error: Invalid media URL provided.</p>
+            </div>`;
+        }
+
+        return `
+            <div class="card p-5 rounded-xl shadow-xl transition duration-300 border-b-4 border-accent/70 hover:border-accent">
+                <div id="song-card-${songId}" class="group" onclick="togglePlayer('${songId}')">
+                    <div class="relative mb-4">
+                        <h3 class="text-xl font-bold text-white capitalize">${song.title}</h3>
+                        <p class="text-sm text-gray-400 mb-2">Genre: <span class="text-accent/90 capitalize">${primaryGenre}</span></p>
+
+                        <!-- Branded Element -->
+                        <div class="absolute top-0 right-0 p-1 bg-accent/90 rounded-bl-lg text-xs font-semibold text-slate-900 
+                                     transform translate-y-[-16px] translate-x-1 transition duration-300 group-hover:scale-105">
+                            THE LYRIC ARCHITECT
+                        </div>
+                    </div>
+                    
+                    <button id="play-button-${songId}" 
+                            class="flex items-center justify-center w-full bg-accent hover:bg-orange-600 text-slate-900 font-semibold py-2 px-4 rounded-lg transition duration-150 text-sm shadow-md">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 mr-2">
+                            <path fill-rule="evenodd" d="M2 10a8 8 0 1116 0 8 8 0 01-16 0zm6.394-2.886a.75.75 0 00-1.14 0l-3.294 3.473a.75.75 0 000 1.121l3.294 3.473a.75.75 0 001.14 0l3.294-3.473a.75.75 0 000-1.121l-3.294-3.473z" clip-rule="evenodd" />
+                        </svg>
+                        Play Track
+                    </button>
+                </div>
+                
+                <!-- Embedded Player Container (Starts Collapsed) -->
+                <div id="player-container-${songId}" class="player-container collapsed mt-4">
+                    <iframe 
+                        src="${embedUrl}" 
+                        frameborder="no" 
+                        allow="autoplay" 
+                        scrolling="no" 
+                        height="120" 
+                        width="100%">
+                    </iframe>
+                </div>
             </div>
         `;
     };
@@ -166,6 +277,7 @@ box-shadow: 0 0 10px #ff6a3d;
     // Function to render the filtered song list
     const renderSongs = (filteredSongs, currentGenre) => {
         songListElement.innerHTML = '';
+        activePlayerId = null; // Reset player state on new filter
         
         if (filteredSongs.length === 0) {
             songListElement.classList.add('hidden');
@@ -174,14 +286,15 @@ box-shadow: 0 0 10px #ff6a3d;
             songListElement.classList.remove('hidden');
             noResultsElement.classList.add('hidden');
             
-            const html = filteredSongs.map(renderSongCard).join('');
+            // Render songs, passing the index for unique IDs
+            const html = filteredSongs.map((song, index) => renderSongCard(song, index)).join('');
             songListElement.innerHTML = html;
         }
 
-        const titleText = currentGenre === 'all' ? 'Showing All Songs' : `Showing Genre: ${currentGenre.toUpperCase()}`;
+        const titleText = currentGenre === 'all' ? `Showing All Songs (${songs.length})` : `Showing Genre: ${currentGenre.toUpperCase()}`;
         filterTitleElement.textContent = titleText;
         
-        // Update active filter button
+        // Update active filter button styling
         document.querySelectorAll('.genre-tag').forEach(btn => {
             btn.classList.remove('bg-accent', 'text-slate-900', 'bg-gray-600', 'text-white');
             if (normalizeGenre(btn.dataset.genre) === currentGenre) {
@@ -199,37 +312,45 @@ box-shadow: 0 0 10px #ff6a3d;
         if (normalizedGenre === 'all') {
             renderSongs(songs, 'all');
         } else {
-            const filtered = songs.filter(song => normalizeGenre(song.genre) === normalizedGenre);
+            const filtered = songs.filter(song => {
+                const songGenres = song.genre.split(/[ ,&]+/).map(g => normalizeGenre(g));
+                return songGenres.includes(normalizedGenre);
+            });
             renderSongs(filtered, normalizedGenre);
         }
     };
 
     // Function to create and attach genre filter buttons
     const createGenreFilters = () => {
-        // 1. Get unique genres (normalized)
-        const uniqueGenres = [...new Set(songs.map(song => normalizeGenre(song.genre)))].sort();
+        let allGenres = songs.flatMap(song => song.genre.split(/[ ,&]+/).map(normalizeGenre));
+        const uniqueGenres = [...new Set(allGenres)].filter(g => g !== '').sort();
 
-        // 2. Add the 'All Songs' button first
+        // All Songs button
         let genreButtonsHtml = `
             <button class="genre-tag bg-accent text-slate-900 px-4 py-2 rounded-full text-sm font-medium hover:bg-orange-600" data-genre="all">
                 All Songs (${songs.length})
             </button>
         `;
 
-        // 3. Generate buttons for each unique genre
+        // Genre buttons
         genreButtonsHtml += uniqueGenres.map(genre => {
-            const count = songs.filter(song => normalizeGenre(song.genre) === genre).length;
-            return `
-                <button class="genre-tag bg-gray-600 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-gray-500 capitalize" data-genre="${genre}">
-                    ${genre} (${count})
-                </button>
-            `;
+            const count = songs.filter(song => {
+                const songGenres = song.genre.split(/[ ,&]+/).map(normalizeGenre);
+                return songGenres.includes(genre);
+            }).length;
+            
+            if (count > 0) {
+                return `
+                    <button class="genre-tag bg-gray-600 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-gray-500 capitalize" data-genre="${genre}">
+                        ${genre} (${count})
+                    </button>
+                `;
+            }
+            return '';
         }).join('');
 
-        // 4. Insert into the DOM
         filtersElement.innerHTML = genreButtonsHtml;
 
-        // 5. Attach click listeners to all buttons
         filtersElement.addEventListener('click', (event) => {
             const target = event.target.closest('.genre-tag');
             if (target) {
@@ -238,10 +359,12 @@ box-shadow: 0 0 10px #ff6a3d;
         });
     };
 
+    // Expose togglePlayer to the global scope so it can be called from the onclick attribute
+    window.togglePlayer = togglePlayer;
+    
     // Initialize the page on load
     window.onload = () => {
         createGenreFilters();
-        // Display all songs by default (initial filter)
         filterSongs('all');
     };
 </script>
